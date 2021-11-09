@@ -3,10 +3,45 @@
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 0px;
   justify-content: center;
-  height: 85vmin;
-  width: 85vmin;
+  height: 60vmin;
+  width: 60vmin;
 }
 
-.square {
+.square-01,
+.square-21 {
+  border: solid #DEDEDF;
+  border-width: 0px 3px;
+}
+
+.square-10,
+.square-12 {
+  border: solid #DEDEDF;
+  border-width: 3px 0px;
+}
+
+.square-11 {
   border: 3px solid #DEDEDF;
+}
+
+.grid-container div {
+  aspect-ratio: 1;
+}
+
+.grid-container div:hover {
+  background-color: #111111;
+}
+img {
+  max-width: 95%;
+  max-height: 95%;
+}
+
+@media (max-width: 1024px) {
+  .grid-container {
+    height: 100vmin;
+    width: 100vmin;  
+  }
+
+  .mobile-LR-nopadding {
+    padding: 3rem 0px;
+  }
 }

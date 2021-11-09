@@ -12,7 +12,7 @@ function App() {
             <h2 className="subtitle is-3">Minimax algorithm</h2>
           </div>
         </header>
-        <main className="hero-body is-flex is-justify-content-center">
+        <main className="hero-body is-flex is-justify-content-center mobile-LR-nopadding">
           <div className="grid-container">
             <Grid />
           </div>
