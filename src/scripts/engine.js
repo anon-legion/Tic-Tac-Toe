@@ -57,3 +57,4 @@ export const isWin = (playerId, arr) => {
 export const isValidMove = (arr, row, col) => {
   return !arr[row][col]
 };
+

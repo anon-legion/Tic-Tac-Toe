@@ -9,7 +9,16 @@ import '../App.css';
 
 export default function Grid() {
   // use custom hook to access game states
-  const { gridArray, turn, flipTurn, gridController, winner, winController, isPlaying, toggleIsPlaying } = useGameContext();
+  const {
+    gridArray,
+    turn,
+    flipTurn,
+    gridController,
+    winner,
+    winController,
+    isPlaying,
+    toggleIsPlaying
+  } = useGameContext();
 
 
   const handleClick = (row, col) => {

@@ -1,6 +1,6 @@
 // react function component that renders the game context
 
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
 import { isValidMove } from '../scripts/engine.js';
 
 
@@ -26,6 +26,9 @@ export const GameProvider = ({ children }) => {
   
   // turn state
   const [turn, setTurn] = useState(() => 1);
+
+  // count number of turns state
+  const turnCount = useRef(0);
 
   // state of play used by grid event handlers
   const [ isPlaying, setIsPlaying ] = useState(() => true);
@@ -73,13 +76,18 @@ export const GameProvider = ({ children }) => {
   // toggle turn state
   const flipTurn = () => {
     setTurn(prevTurn => prevTurn * -1);
-  };
-  
+  };  
 
   // toggle playing state
   const toggleIsPlaying = () => {
     setIsPlaying(prevState => !prevState);
   };
+
+
+  // useEffect that auto increments turnCount ref
+  useEffect(() => {
+    turnCount.current = turnCount.current + 1
+  }, [turn])
 
 
   return (
@@ -91,7 +99,8 @@ export const GameProvider = ({ children }) => {
       winner,
       winController,
       isPlaying,
-      toggleIsPlaying
+      toggleIsPlaying,
+      turnCount
     }}>
       {children}
     </GameContext.Provider>

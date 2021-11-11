@@ -7,9 +7,9 @@ import '../App.css';
 
 
 export default function GameDisplay() {
-  const { turn, winner } = useGameContext();
+  const { turn, winner, turnCount } = useGameContext();
 
-  const [playerStatus, setPlayerStatus, isPlaying] = useState(() => {
+  const [playerStatus, setPlayerStatus] = useState(() => {
     return {
       X: '',
       O: '',
@@ -18,47 +18,44 @@ export default function GameDisplay() {
 
 
   useEffect(() => {
-    switch (turn) {
-      case 1:
-        setPlayerStatus(prevState => {
-          return {
-            X: isGameOver() ? 'WIN!' : 'Turn',
-            O: isGameOver() ? 'LOSE!' : null,
-          }
-        });
-        break;
-      case -1:
-        setPlayerStatus(prevState => {
-          return {
-            X: isGameOver() ? 'LOSE!' : null,
-            O: isGameOver() ? 'WIN!' : 'Turn',
-          }
-        });
-        break;
-      default:
-        return playerStatus;        
-    }  
-  },[turn, winner]);
+    // function checks if there is already a winner
+    // returns true if winner array is not empty, false otherwise
+    const isGameOver = () => {
+      return winner.length;
+    }
+    // check if moves have not been exhausted
+    if (turnCount.current < 9) {
+      switch (turn) {
+        case 1:
+          setPlayerStatus(prevState => {
+            return {
+              X: isGameOver() ? 'WIN!' : 'Turn',
+              O: isGameOver() ? 'LOSE!' : null,
+            }
+          });
+          break;
+        case -1:
+          setPlayerStatus(prevState => {
+            return {
+              X: isGameOver() ? 'LOSE!' : null,
+              O: isGameOver() ? 'WIN!' : 'Turn',
+            }
+          });
+          break;
+        default:
+          return null;        
+      }
+    } else {
+      // if moves have been exhausted, game is draw
+      setPlayerStatus(prevState => {
+        return {
+          X: 'DRAW',
+          O: 'DRAW'
+        }
+      })
+    }
+  },[turn, winner, turnCount]);
         
-        
-  // function to check if winner array is not empty, if empty then no winner
-  // returns false if empty and true if not empty
-  const isGameOver = () => {
-    return winner.length;
-  }
-
-  // check if game has started
-  // returns false if ALL playerStatus attributes are empty
-  const isGameStart = () => {
-    return !(!playerStatus.X && !playerStatus.O);
-  }
-
-  // create playerStatus module to be used in useEffect
-  // const playerStatusController = (n) => {
-
-  // }
-
-
 
   return (
     <>
