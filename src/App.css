@@ -1,3 +1,8 @@
+img {
+  max-width: 95%;
+  max-height: 95%;
+}
+
 .grid-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -24,15 +29,26 @@
 }
 
 .grid-container div {
+  display: flex;
   aspect-ratio: 1;
+  justify-content: center;
+  align-items: center;
 }
 
 .grid-container div:hover {
-  background-color: #111111;
+  background-color: #0E0E0F;
 }
-img {
-  max-width: 95%;
-  max-height: 95%;
+
+.player-x {
+  background-color: #FE605D;
+}
+
+.player-o {
+  background-color: #3DC4F3;
+}
+
+.min-height-1 {
+  min-height: 2rem;
 }
 
 @media (max-width: 1024px) {

@@ -1,46 +1,33 @@
 // react function component that renders a 3 by 3 grid of squares
 
-import React, { useState } from 'react';
-import imgX from '../img/ttt_x.png';
-import imgO from '../img/ttt_o.png';
+import React from 'react';
+import { isWin, imgSelector } from '../scripts/engine.js';
+import { useGameContext } from './gameContext.js';
 import 'bulma/css/bulma.min.css';
 import '../App.css';
 
-const imgSelector = (n) => {
-  if (n > 0) {
-    return imgX;
-  } else if (n < 0) {
-    return imgO;
-  } else {
-    return null;
-  }
-}
-
 
 export default function Grid() {
-	const [gridArray, setGridArray] = useState(() => [
-		[0, 0, 0],
-		[0, 0, 0],
-		[0, 0, 0]
-	]);
+  // use custom hook to access game states
+  const { gridArray, turn, flipTurn, gridController, winner, winController, isPlaying, toggleIsPlaying } = useGameContext();
 
-  const [turn, setTurn] = useState(() => 1);
-
-
-  const flipTurn = () => {
-    setTurn(prevTurn => prevTurn * -1);
-  }
 
   const handleClick = (row, col) => {
-    if (gridArray[row][col] !== 0) {
-      return;
+    // add value/move to grid array
+    gridController.newMove(row, col);
+    // check if game is over
+    const { win, winArr } = isWin(turn, gridArray);
+    if (win) {
+      //add winning squares to win state
+      winController.winGame(winArr);
+      // disable playing state
+      toggleIsPlaying();
     } else {
-      const newGridArray = [...gridArray];
-      newGridArray[row][col] = turn;
-      setGridArray(prevState => [...newGridArray]);
       flipTurn();
     }
   }
+
+  // create a game over function that resets the game
 	
   return (
     <>
@@ -50,9 +37,11 @@ export default function Grid() {
             return (              
               <div
                 key={`${yAxis}${xAxis}`}
-                className={`square-${yAxis}${xAxis}`}
+                // add border to squares and add class on win to highlight winning squares
+                className={`square-${yAxis}${xAxis} ${winner.includes(`${yAxis}${xAxis}`) ? 'has-background-success-dark' : ''}`}
                 value={gridArray[yAxis][xAxis]}
-                onClick={() => handleClick(yAxis, xAxis)}
+                // disable onClick event if game is over
+                onClick={isPlaying ? () => handleClick(yAxis, xAxis) : null}
               >
                 <img src={imgSelector(gridArray[yAxis][xAxis])} alt={gridArray[yAxis][xAxis] === 0 ? '' : "X or O"} />
               </div>
