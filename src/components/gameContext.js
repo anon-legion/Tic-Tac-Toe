@@ -30,8 +30,6 @@ export const GameProvider = ({ children }) => {
   // count number of turns state
   const turnCount = useRef(0);
 
-  // state of play used by grid event handlers
-  const [ isPlaying, setIsPlaying ] = useState(() => true);
   
   const gridController = ((row, col) => {
     // add a value/move to the grid array
@@ -78,10 +76,12 @@ export const GameProvider = ({ children }) => {
     setTurn(prevTurn => prevTurn * -1);
   };  
 
-  // toggle playing state
-  const toggleIsPlaying = () => {
-    setIsPlaying(prevState => !prevState);
-  };
+  const resetGame = () => {
+    gridController.resetGrid();
+    winController.newGame();
+    setTurn(prevState => 1);
+    turnCount.current = 0;
+  }
 
 
   // useEffect that auto increments turnCount ref
@@ -98,9 +98,8 @@ export const GameProvider = ({ children }) => {
       flipTurn,
       winner,
       winController,
-      isPlaying,
-      toggleIsPlaying,
-      turnCount
+      turnCount,
+      resetGame
     }}>
       {children}
     </GameContext.Provider>

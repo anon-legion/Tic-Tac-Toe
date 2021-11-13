@@ -18,13 +18,21 @@ export default function GameDisplay() {
 
 
   useEffect(() => {
+    console.log(`turn =\t${turn}\nturnCount =\t${turnCount.current}`)
     // function checks if there is already a winner
     // returns true if winner array is not empty, false otherwise
     const isGameOver = () => {
       return winner.length;
     }
-    // check if moves have not been exhausted
-    if (turnCount.current < 9) {
+    // do if moves have been exhausted and no winner, game is draw
+    if (turnCount.current >= 9 && !isGameOver()) {
+      setPlayerStatus(prevState => {
+        return {
+          X: 'DRAW',
+          O: 'DRAW'
+        }
+      })
+    } else {
       switch (turn) {
         case 1:
           setPlayerStatus(prevState => {
@@ -45,14 +53,6 @@ export default function GameDisplay() {
         default:
           return null;        
       }
-    } else {
-      // if moves have been exhausted, game is draw
-      setPlayerStatus(prevState => {
-        return {
-          X: 'DRAW',
-          O: 'DRAW'
-        }
-      })
     }
   },[turn, winner, turnCount]);
         

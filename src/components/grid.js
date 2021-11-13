@@ -15,9 +15,7 @@ export default function Grid() {
     flipTurn,
     gridController,
     winner,
-    winController,
-    isPlaying,
-    toggleIsPlaying
+    winController
   } = useGameContext();
 
 
@@ -30,7 +28,6 @@ export default function Grid() {
       //add winning squares to win state
       winController.winGame(winArr);
       // disable playing state
-      toggleIsPlaying();
     } else {
       flipTurn();
     }
@@ -40,19 +37,19 @@ export default function Grid() {
 	
   return (
     <>
-      {gridArray.map((row, yAxis) => {
+      {gridArray.map((row, rowIndex) => {
         return (
-          row.map((col, xAxis) => {
+          row.map((col, columnIndex) => {
             return (              
               <div
-                key={`${yAxis}${xAxis}`}
+                key={`${rowIndex}${columnIndex}`}
                 // add border to squares and add class on win to highlight winning squares
-                className={`square-${yAxis}${xAxis} ${winner.includes(`${yAxis}${xAxis}`) ? 'has-background-success-dark' : ''}`}
-                value={gridArray[yAxis][xAxis]}
-                // disable onClick event if game is over
-                onClick={isPlaying ? () => handleClick(yAxis, xAxis) : null}
+                className={`square-${rowIndex}${columnIndex} ${winner.includes(`${rowIndex}${columnIndex}`) ? 'has-background-success-dark' : ''}`}
+                value={gridArray[rowIndex][columnIndex]}
+                // disable onClick event if game is over or square is already filled
+                onClick={winner.length || col ? null : () => handleClick(rowIndex, columnIndex)}
               >
-                <img src={imgSelector(gridArray[yAxis][xAxis])} alt={gridArray[yAxis][xAxis] === 0 ? '' : "X or O"} />
+                <img src={imgSelector(gridArray[rowIndex][columnIndex])} alt={gridArray[rowIndex][columnIndex] === 0 ? '' : "X or O"} />
               </div>
             );
           })

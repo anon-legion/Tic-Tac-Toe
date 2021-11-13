@@ -1,6 +1,7 @@
 import Grid from './components/grid.js';
 import { GameProvider } from './components/gameContext.js';
 import GameDisplay from './components/gameDisplay.js';
+import GameButtons from './components/gameButtons.js';
 import 'bulma/css/bulma.min.css';
 import './App.css';
 
@@ -22,6 +23,9 @@ function App() {
               </div>
               <div className="grid-container">
                 <Grid />
+              </div>
+              <div className="buttons is-centered p-6">
+                <GameButtons />
               </div>
             </div>
           </GameProvider>
