@@ -52,7 +52,7 @@ img {
 }
 
 .button-min-width {
-  min-width: 25%;
+  min-width: 27%;
 }
 
 @media (max-width: 1024px) {
