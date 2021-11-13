@@ -3,6 +3,7 @@ img {
   max-height: 95%;
 }
 
+/* creates a 3 by 3 square grid */
 .grid-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -28,6 +29,7 @@ img {
   border: 3px solid #DEDEDF;
 }
 
+/* keeps divs inside the grid-container a square */
 .grid-container div {
   display: flex;
   aspect-ratio: 1;
@@ -53,6 +55,21 @@ img {
 
 .button-min-width {
   min-width: 27%;
+}
+
+/* create animation for win-effect class */
+@keyframes win-effect {
+  from {
+    filter: hue-rotate(180deg);
+  }
+  to {
+    filter: hue-rotate(0deg);
+  }
+}
+
+/* class to add effect to winnin squares*/
+.is-win {
+  animation: win-effect 2500ms ease-in-out;
 }
 
 @media (max-width: 1024px) {

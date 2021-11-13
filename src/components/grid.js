@@ -43,8 +43,8 @@ export default function Grid() {
             return (              
               <div
                 key={`${rowIndex}${columnIndex}`}
-                // add border to squares and add class on win to highlight winning squares
-                className={`square-${rowIndex}${columnIndex} ${winner.includes(`${rowIndex}${columnIndex}`) ? 'has-background-success-dark' : ''}`}
+                // add border to squares and add class on win to highlight and animate winning squares
+                className={`square-${rowIndex}${columnIndex} ${winner.includes(`${rowIndex}${columnIndex}`) ? 'has-background-success-dark is-win' : ''}`}
                 value={gridArray[rowIndex][columnIndex]}
                 // disable onClick event handler if game is over or square is already filled or game is not in playing state (turn === 0)
                 onClick={winner.length || col || !turn ? null : () => handleClick(rowIndex, columnIndex)}

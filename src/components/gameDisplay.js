@@ -66,7 +66,7 @@ export default function GameDisplay() {
             {/* hide playerStatus if game is not in playing state (turn === 0) */}
             <h4 className={`is-size-5 has-text-link ${!turn ? 'is-hidden' : null}`}>{playerStatus.X}</h4>
           </div>
-          <div className="box p-3 player-x">
+          <div className={`box p-3 player-x ${winner.length && turn > 0 ? 'is-win' : null}`}>
             <h4 className="is-size-5 has-text-white">Player</h4>
           </div>
         </div>
@@ -75,7 +75,7 @@ export default function GameDisplay() {
             {/* hide playerStatus if game is not in playing state (turn === 0) */}
             <h4 className={`is-size-5 has-text-link ${!turn ? 'is-hidden' : null}`}>{playerStatus.O}</h4>
           </div>
-          <div className="box p-3 has-text-right player-o">
+          <div className={`box p-3 has-text-right player-o ${winner.length && turn < 0 ? 'is-win' : null}`}>
             <h4 className="is-size-5 has-text-white">Player</h4>
           </div>
         </div>
