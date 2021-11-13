@@ -59,17 +59,26 @@ img {
 
 /* create animation for win-effect class */
 @keyframes win-effect {
-  from {
+  0% {
+    filter: hue-rotate(60deg);
+  }
+  25% {
+    filter: hue-rotate(120deg);
+  }
+  50% {
     filter: hue-rotate(180deg);
   }
-  to {
-    filter: hue-rotate(0deg);
+  75% {
+    filter: hue-rotate(240deg);
+  }
+  100% {
+    filter: hue-rotate(300deg);
   }
 }
 
 /* class to add effect to winnin squares*/
 .is-win {
-  animation: win-effect 2500ms ease-in-out;
+  animation: win-effect 2000ms ease-in-out 2;
 }
 
 @media (max-width: 1024px) {
