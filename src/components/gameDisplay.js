@@ -18,14 +18,14 @@ export default function GameDisplay() {
 
 
   useEffect(() => {
-    console.log(`turn =\t${turn}\nturnCount =\t${turnCount.current}`)
+    // console.log(`turn =\t${turn}\nturnCount =\t${turnCount.current}`)
     // function checks if there is already a winner
     // returns true if winner array is not empty, false otherwise
     const isGameOver = () => {
       return winner.length;
     }
-    // do if moves have been exhausted and no winner, game is draw
     if (turnCount.current >= 9 && !isGameOver()) {
+      // if moves have been exhausted, game is draw
       setPlayerStatus(prevState => {
         return {
           X: 'DRAW',
@@ -33,6 +33,7 @@ export default function GameDisplay() {
         }
       })
     } else {
+    // check if moves have not been exhausted
       switch (turn) {
         case 1:
           setPlayerStatus(prevState => {
@@ -62,7 +63,8 @@ export default function GameDisplay() {
       <div className="columns is-variable is-1 is-mobile">
         <div className="column is-half">
           <div className="section p-0 pl-3 min-height-1">
-            <h4 className="is-size-5 has-text-link">{playerStatus.X}</h4>
+            {/* hide playerStatus if game is not in playing state (turn === 0) */}
+            <h4 className={`is-size-5 has-text-link ${!turn ? 'is-hidden' : null}`}>{playerStatus.X}</h4>
           </div>
           <div className="box p-3 player-x">
             <h4 className="is-size-5 has-text-white">Player</h4>
@@ -70,7 +72,8 @@ export default function GameDisplay() {
         </div>
         <div className="column is-half">
           <div className="section p-0 pr-3 has-text-right min-height-1">
-            <h4 className="is-size-5 has-text-link">{playerStatus.O}</h4>
+            {/* hide playerStatus if game is not in playing state (turn === 0) */}
+            <h4 className={`is-size-5 has-text-link ${!turn ? 'is-hidden' : null}`}>{playerStatus.O}</h4>
           </div>
           <div className="box p-3 has-text-right player-o">
             <h4 className="is-size-5 has-text-white">Player</h4>

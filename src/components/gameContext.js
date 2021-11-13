@@ -25,7 +25,7 @@ export const GameProvider = ({ children }) => {
   const [winner, setWinner] = useState(() => []);
   
   // turn state
-  const [turn, setTurn] = useState(() => 1);
+  const [turn, setTurn] = useState(() => 0);
 
   // count number of turns state
   const turnCount = useRef(0);
@@ -76,12 +76,25 @@ export const GameProvider = ({ children }) => {
     setTurn(prevTurn => prevTurn * -1);
   };  
 
-  const resetGame = () => {
-    gridController.resetGrid();
-    winController.newGame();
-    setTurn(prevState => 1);
-    turnCount.current = 0;
-  }
+  const buttonModule = (() => {
+    const resetGame = () => {
+      gridController.resetGrid();
+      winController.newGame();
+      setTurn(prevState => 0);
+      turnCount.current = 0;
+    };
+
+    const startGame = () => {
+      setTurn(prevState => 1);
+      turnCount.current = 0;
+    };
+
+    return {
+      resetGame,
+      startGame
+    };    
+  })()
+  
 
 
   // useEffect that auto increments turnCount ref
@@ -99,7 +112,7 @@ export const GameProvider = ({ children }) => {
       winner,
       winController,
       turnCount,
-      resetGame
+      buttonModule
     }}>
       {children}
     </GameContext.Provider>

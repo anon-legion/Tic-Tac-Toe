@@ -46,8 +46,8 @@ export default function Grid() {
                 // add border to squares and add class on win to highlight winning squares
                 className={`square-${rowIndex}${columnIndex} ${winner.includes(`${rowIndex}${columnIndex}`) ? 'has-background-success-dark' : ''}`}
                 value={gridArray[rowIndex][columnIndex]}
-                // disable onClick event if game is over or square is already filled
-                onClick={winner.length || col ? null : () => handleClick(rowIndex, columnIndex)}
+                // disable onClick event handler if game is over or square is already filled or game is not in playing state (turn === 0)
+                onClick={winner.length || col || !turn ? null : () => handleClick(rowIndex, columnIndex)}
               >
                 <img src={imgSelector(gridArray[rowIndex][columnIndex])} alt={gridArray[rowIndex][columnIndex] === 0 ? '' : "X or O"} />
               </div>

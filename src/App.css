@@ -51,6 +51,10 @@ img {
   min-height: 2rem;
 }
 
+.button-min-width {
+  min-width: 25%;
+}
+
 @media (max-width: 1024px) {
   .grid-container {
     height: 100vmin;

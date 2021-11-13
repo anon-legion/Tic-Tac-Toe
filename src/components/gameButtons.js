@@ -2,14 +2,17 @@
 
 import React from 'react';
 import { useGameContext } from './gameContext';
+import 'bulma/css/bulma.min.css';
+import '../App.css';
 
 
 export default function GameButtons() {
-	const { resetGame } = useGameContext();
+	const { buttonModule, turn, turnCount } = useGameContext();
 	return (
 		<>
-			<button className="button is-link is-outlined" onClick={resetGame}>
-				<span className="is-size-5">Reset</span>
+			{/* change button function from startGame if game is not in playing state (turn === 0) to resetGame otherwise, disable button on first move */}
+			<button className="button is-link is-outlined button-min-width" onClick={turn ? buttonModule.resetGame : buttonModule.startGame} disabled={turn && !turnCount.current? true : false}>
+				<span className="is-size-5">{turn ? 'Reset' : 'Start'}</span>
 			</button>
 		</>
   );
