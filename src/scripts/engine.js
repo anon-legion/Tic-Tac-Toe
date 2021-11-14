@@ -58,3 +58,41 @@ export const isValidMove = (arr, row, col) => {
   return !arr[row][col]
 };
 
+// tic-tac-toe minimax alph-beta pruning algorithm
+export const minimax = (arr, depth, playerId, alpha, beta) => {
+  const { win, winArr } = isWin(playerId, arr);
+
+  if (win) {
+    return { score: 10 - depth, winArr };
+  } else if (arr.every(el => el.every(el => el !== 0))) {
+    return { score: 0, winArr };
+  }
+
+  let bestScore = -Infinity;
+  let bestMove = null;
+
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = 0; j < arr.length; j++) {
+      if (isValidMove(arr, i, j)) {
+        arr[i][j] = playerId;
+
+        let score = -minimax(arr, depth + 1, -playerId, -beta, -alpha).score;
+
+        if (score > bestScore) {
+          bestScore = score;
+          bestMove = [i, j];
+        }
+
+        alpha = Math.max(alpha, score);
+
+        if (alpha >= beta) {
+          break;
+        }
+
+        arr[i][j] = 0;
+      }
+    }
+  }
+
+  return { score: bestScore, winArr };
+}
