@@ -59,7 +59,7 @@ export const isValidMove = (arr, row, col) => {
 };
 
 // tic-tac-toe minimax alpha-beta pruning algorithm
-export const minimax = (arrRef, depth, playerId, alpha, beta) => {
+export const minimax = (arrRef, playerId, depth=0, alpha=-Infinity, beta=Infinity) => {
   // create shallow copy of each row in 2D array of arrRef to prevent mutating original array
   // arguments of JavaScript functions/methods are references to their original values
   const arr = arrRef.map(row => [...row]);
@@ -91,7 +91,7 @@ export const minimax = (arrRef, depth, playerId, alpha, beta) => {
         // in the recursion, opponent will maximize score resulting in negative/opposite effect on current player
         // therefore opponent's score is a negative evaluation to current player
         // switch playerId to opponent id,  decrement depth by 1 (recursive call), evaluate alpha as -beta and beta as -alpha
-        let score = -minimax(arr, depth + 1, -playerId, -beta, -alpha).score;
+        let score = -minimax(arr, -playerId, depth + 1, -beta, -alpha).score;
 
         // if score is better than best score, update best score and best move (for this depth)
         if (score > bestScore) {

@@ -1,7 +1,7 @@
 // react function component that renders the game context
 
 import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
-import { isValidMove } from '../scripts/engine.js';
+import { isValidMove, minimax, isWin } from '../scripts/engine.js';
 
 
 const GameContext = createContext();
@@ -94,13 +94,34 @@ export const GameProvider = ({ children }) => {
       startGame
     };    
   })()
-  
 
 
   // useEffect that auto increments turnCount ref
   useEffect(() => {
     turnCount.current = turnCount.current + 1
   }, [turn])
+
+  // add a condition to flipping turn to check if computer move is needed
+  // useEffect(() => {
+  //   // check if computer needs to move
+  //   if (turn === -1 && !winner) {
+  //     computerMove();
+  //     // check if game is over
+  //     const { win, winArr } = isWin(turn, gridArray);
+  //     if (win) {
+  //       //add winning squares to win state
+  //       winController.winGame(winArr);
+  //     } else {
+  //       flipTurn();
+  //     }
+  //   }
+  // }, [turn, winner, gridArray]);
+
+  // function that calculates and performs computer move
+  const computerMove = () => {
+    const [row, col] = minimax(gridArray, turn).move;
+    gridController.newMove(row, col);
+  }
 
 
   return (

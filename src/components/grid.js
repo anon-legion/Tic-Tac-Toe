@@ -33,7 +33,6 @@ export default function Grid() {
     }
   }
 
-  // create a game over function that resets the game
 	
   return (
     <>
