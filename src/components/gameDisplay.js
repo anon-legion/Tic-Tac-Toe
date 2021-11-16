@@ -7,7 +7,7 @@ import '../App.css';
 
 
 export default function GameDisplay() {
-  const { turn, winner, turnCount } = useGameContext();
+  const { turn, winner, turnCount, config, toggleConfig } = useGameContext();
 
   const [playerStatus, setPlayerStatus] = useState(() => {
     return {
@@ -18,14 +18,13 @@ export default function GameDisplay() {
 
 
   useEffect(() => {
-    // console.log(`turn =\t${turn}\nturnCount =\t${turnCount.current}`)
     // function checks if there is already a winner
     // returns true if winner array is not empty, false otherwise
     const isGameOver = () => {
-      return winner.length;
+      return winner.length ? true : false;
     }
     if (turnCount.current >= 9 && !isGameOver()) {
-      // if moves have been exhausted, game is draw
+      // if moves have been exhausted and now winner game is draw
       setPlayerStatus(prevState => {
         return {
           X: 'DRAW',
@@ -33,7 +32,7 @@ export default function GameDisplay() {
         }
       })
     } else {
-    // check if moves have not been exhausted
+      // do if moves have not been exhausted
       switch (turn) {
         case 1:
           setPlayerStatus(prevState => {
@@ -52,10 +51,20 @@ export default function GameDisplay() {
           });
           break;
         default:
-          return null;        
+          setPlayerStatus(prevState => {
+            return {
+              X: '(double click to toggle AI)',
+              O: '(double click to toggle AI)',
+            }
+          });
       }
     }
   },[turn, winner, turnCount]);
+
+  // function to toggle AI on double click used by div box
+  const handleDoubleClick = (e) => {
+    toggleConfig(e.currentTarget.id);
+  };
         
 
   return (
@@ -64,19 +73,19 @@ export default function GameDisplay() {
         <div className="column is-half">
           <div className="section p-0 pl-3 min-height-1">
             {/* hide playerStatus if game is not in playing state (turn === 0) */}
-            <h4 className={`is-size-5 has-text-link ${!turn ? 'is-hidden' : null}`}>{playerStatus.X}</h4>
+            <h4 className="is-size-5 has-text-link">{playerStatus.X}</h4>
           </div>
-          <div className={`box p-3 player-x ${winner.length && turn > 0 ? 'is-win' : null}`}>
-            <h4 className="is-size-5 has-text-white">Player</h4>
+          <div className={`box p-3 player-x ${winner.length && turn > 0 ? 'is-win' : null}`} id="X" onDoubleClick={handleDoubleClick}>
+            <h4 className="is-size-5 has-text-white">{config.X.label}</h4>
           </div>
         </div>
         <div className="column is-half">
           <div className="section p-0 pr-3 has-text-right min-height-1">
             {/* hide playerStatus if game is not in playing state (turn === 0) */}
-            <h4 className={`is-size-5 has-text-link ${!turn ? 'is-hidden' : null}`}>{playerStatus.O}</h4>
+            <h4 className="is-size-5 has-text-link">{playerStatus.O}</h4>
           </div>
-          <div className={`box p-3 has-text-right player-o ${winner.length && turn < 0 ? 'is-win' : null}`}>
-            <h4 className="is-size-5 has-text-white">Player</h4>
+          <div className={`box p-3 has-text-right player-o ${winner.length && turn < 0 ? 'is-win' : null}`} id="O" onDoubleClick={handleDoubleClick}>
+            <h4 className="is-size-5 has-text-white">{config.O.label}</h4>
           </div>
         </div>
       </div>

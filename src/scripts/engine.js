@@ -55,7 +55,7 @@ export const isWin = (playerId, arr) => {
 
 // checks if move is valid
 export const isValidMove = (arr, row, col) => {
-  return !arr[row][col]
+  return !arr[row][col] ? true : false;
 };
 
 // tic-tac-toe minimax alpha-beta pruning algorithm
