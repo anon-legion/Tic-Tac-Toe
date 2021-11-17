@@ -9,14 +9,12 @@ import './App.css';
 function App() {
   return (
     <>
-      <div className="hero is-black">
-        <header className="hero-head">
-          <div className="container has-text-centered">
-            <h1 className="title is-1 has-text-primary">Tic Tac Toe</h1>
-            <h2 className="subtitle is-4">Minimax algorithm</h2>
-          </div>
-        </header>
-      </div>
+      <header className="hero is-black">
+        <div className="container has-text-centered">
+          <h1 className="title is-1 has-text-primary">Tic Tac Toe</h1>
+          <h2 className="subtitle is-4">Minimax algorithm</h2>
+        </div>
+      </header>
       <main className="is-flex is-flex-direction-column is-justify-content-center mobile-LR-nopadding">
         <GameProvider>
           <div className="container">
