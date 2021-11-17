@@ -55,44 +55,66 @@ export const isWin = (playerId, arr) => {
 
 // checks if move is valid
 export const isValidMove = (arr, row, col) => {
-  return !arr[row][col]
+  return !arr[row][col] ? true : false;
 };
 
-// tic-tac-toe minimax alph-beta pruning algorithm
-export const minimax = (arr, depth, playerId, alpha, beta) => {
-  const { win, winArr } = isWin(playerId, arr);
+// tic-tac-toe minimax alpha-beta pruning algorithm
+export const minimax = (arrRef, playerId, depth=0, alpha=-Infinity, beta=Infinity) => {
+  // create shallow copy of each row in 2D array of arrRef to prevent mutating original array
+  // arguments of JavaScript functions/methods are references to their original values
+  const arr = arrRef.map(row => [...row]);
 
+  // helper function to determine if game is over
+  // checks if previous depth move by previous playerId in the recursion resulted in a win
+  const { win } = isWin(-playerId, arr);
+
+  // base case: game is over
+  // if game is over, return score
   if (win) {
-    return { score: 10 - depth, winArr };
-  } else if (arr.every(el => el.every(el => el !== 0))) {
-    return { score: 0, winArr };
+    // if previous depth move resulted in a win, return negative score evaluation by current playerId
+    return { score: -(10 - depth) };
+  } else if (arr.every(row => row.every(col => col !== 0))) {
+    // if game is a tie, return score
+    return { score: 0 };
   }
-
+  
+  // recursive case: game is not over
   let bestScore = -Infinity;
   let bestMove = null;
 
+  // iterate through all possible moves
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < arr.length; j++) {
+      // if move is valid and square is not taken make move
       if (isValidMove(arr, i, j)) {
         arr[i][j] = playerId;
+        
+        // get negative score of opponent's move (recursive call)
+        // in the recursion, opponent will maximize score resulting in negative/opposite effect on current player
+        // therefore opponent's score is a negative evaluation to current player
+        // switch playerId to opponent id,  decrement depth by 1 (recursive call), evaluate alpha as -beta and beta as -alpha
+        let score = -minimax(arr, -playerId, depth + 1, -beta, -alpha).score;
 
-        let score = -minimax(arr, depth + 1, -playerId, -beta, -alpha).score;
-
+        // if score is better than best score, update best score and best move (for this depth)
         if (score > bestScore) {
           bestScore = score;
           bestMove = [i, j];
-        }
+        };
 
+        // if score is better than alpha, update alpha
         alpha = Math.max(alpha, score);
 
+        // if alpha is greater than beta, prune tree and return best score and best move (for this depth)
         if (alpha >= beta) {
           break;
-        }
+        };
 
+        // undo move for next iteration of loop (for this depth)
         arr[i][j] = 0;
-      }
-    }
-  }
+      };
+    };
+  };
 
-  return { score: bestScore, winArr };
-}
+  // return best score and best move (for this depth)
+  return { score: bestScore, move: bestMove };
+};
