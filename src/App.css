@@ -1,6 +1,18 @@
+/* import fontawesome icons */
+@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css";
+
+* {
+  box-sizing: border-box;
+}
+
+
 img {
   max-width: 95%;
   max-height: 95%;
+}
+
+div.hero.is-black {
+  background-color: black;
 }
 
 /* creates a 3 by 3 square grid */
@@ -37,8 +49,9 @@ img {
   align-items: center;
 }
 
-.grid-container div:hover {
-  background-color: #0E0E0F;
+.grid-container div:hover,
+footer:hover {
+  background-color: #090909;
 }
 
 .player-x {

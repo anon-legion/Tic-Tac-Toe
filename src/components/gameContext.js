@@ -1,8 +1,17 @@
 // react function component that renders the game context
 
 import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
-import { isValidMove } from '../scripts/engine.js';
+import { minimax, isWin } from '../scripts/engine.js';
 
+
+const LABEL = {
+  PLAYER: 'Player',
+  COMPUTER: 'MiniMax'
+};
+
+const labelSelector = (bool) => {
+  return bool ? LABEL.COMPUTER : LABEL.PLAYER;
+}
 
 const GameContext = createContext();
 
@@ -19,7 +28,19 @@ export const GameProvider = ({ children }) => {
 		[0, 0, 0]
 	]);
 
-  // const [player, setPlayer] = useState(() => 1);
+  // player configuration state
+  const [config, setConfig] = useState(() =>{
+    return {
+      X: {
+        isComputer: false,
+        label: LABEL.PLAYER
+      },
+      O: {
+        isComputer: false,
+        label: LABEL.PLAYER
+      }
+    };
+  });
   
   // game over state
   const [winner, setWinner] = useState(() => []);
@@ -33,13 +54,18 @@ export const GameProvider = ({ children }) => {
   
   const gridController = ((row, col) => {
     // add a value/move to the grid array
-    const newMove = (row, col) => {
-      // check if move is valid, do nothing if not
-      if (isValidMove(gridArray, row, col)) {
-        const newGrid = [...gridArray];
-        newGrid[row][col] = turn;
-        setGridArray(prevState => [...newGrid]);
-      }
+    const newMove = (row, col) => {      
+      const newGrid = [...gridArray];
+      newGrid[row][col] = turn;
+      setGridArray(prevState => [...newGrid]);
+      // check if game is over
+      const { win, winArr } = isWin(turn, gridArray);
+      if (win) {
+        //add winning squares to win state
+        winController.winGame(winArr);
+      } else {
+        flipTurn();
+      };
     };
     
     const resetGrid = () => {
@@ -76,6 +102,7 @@ export const GameProvider = ({ children }) => {
     setTurn(prevTurn => prevTurn * -1);
   };  
 
+  // button function module
   const buttonModule = (() => {
     const resetGame = () => {
       gridController.resetGrid();
@@ -94,13 +121,34 @@ export const GameProvider = ({ children }) => {
       startGame
     };    
   })()
-  
 
+  // function that calculates and performs computer move
+  const computerMove = () => {
+    // call minimax function
+    if ((config.X.isComputer && turn > 0) || (config.O.isComputer && turn < 0)) {
+      const [row, col] = minimax(gridArray, turn).move;
+      // perform computer move
+      setTimeout(() => {gridController.newMove(row, col)}, 400);
+    }
+  }
 
   // useEffect that auto increments turnCount ref
+  // and calls computerMove function if turn is computer
   useEffect(() => {
+    if (turnCount.current < 9) {
+      computerMove();
+    };
     turnCount.current = turnCount.current + 1
-  }, [turn])
+  }, [turn]);
+  
+
+  // function that toggles symbol isComputer and label state
+  const toggleConfig = (symbol) => {
+    const newConfig = {...config};
+    newConfig[symbol].isComputer = !newConfig[symbol].isComputer;
+    newConfig[symbol].label = labelSelector(newConfig[symbol].isComputer);
+    setConfig(prevState => newConfig);
+  };
 
 
   return (
@@ -112,7 +160,9 @@ export const GameProvider = ({ children }) => {
       winner,
       winController,
       turnCount,
-      buttonModule
+      buttonModule,
+      config,
+      toggleConfig
     }}>
       {children}
     </GameContext.Provider>
