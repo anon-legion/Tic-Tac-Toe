@@ -53,8 +53,8 @@ export default function GameDisplay() {
         default:
           setPlayerStatus(prevState => {
             return {
-              X: '(double click to toggle AI)',
-              O: '(double click to toggle AI)',
+              X: '(double click for AI)',
+              O: '(double click for AI)',
             }
           });
       }
@@ -75,7 +75,7 @@ export default function GameDisplay() {
             {/* hide playerStatus if game is not in playing state (turn === 0) */}
             <h4 className="is-size-5 has-text-link">{playerStatus.X}</h4>
           </div>
-          <div className={`box p-3 player-x ${winner.length && turn > 0 ? 'is-win' : null}`} id="X" onDoubleClick={handleDoubleClick}>
+          <div className={`box p-3 player-x ${winner.length && turn > 0 ? 'is-win' : null}`} id="X" onDoubleClick={!turn ? handleDoubleClick : null}>
             <h4 className="is-size-5 has-text-white">{config.X.label}</h4>
           </div>
         </div>
@@ -84,7 +84,7 @@ export default function GameDisplay() {
             {/* hide playerStatus if game is not in playing state (turn === 0) */}
             <h4 className="is-size-5 has-text-link">{playerStatus.O}</h4>
           </div>
-          <div className={`box p-3 has-text-right player-o ${winner.length && turn < 0 ? 'is-win' : null}`} id="O" onDoubleClick={handleDoubleClick}>
+          <div className={`box p-3 has-text-right player-o ${winner.length && turn < 0 ? 'is-win' : null}`} id="O" onDoubleClick={!turn ? handleDoubleClick : null}>
             <h4 className="is-size-5 has-text-white">{config.O.label}</h4>
           </div>
         </div>
