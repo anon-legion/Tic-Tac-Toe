@@ -51,40 +51,39 @@ export default function GameDisplay() {
           });
           break;
         default:
-          setPlayerStatus(prevState => {
-            return {
-              X: '(double click for AI)',
-              O: '(double click for AI)',
-            }
-          });
+          return null;
       }
     }
   },[turn, winner, turnCount]);
 
   // function to toggle AI on double click used by div box
-  const handleDoubleClick = (e) => {
+  const handleDivOnClick = (e) => {
     toggleConfig(e.currentTarget.id);
   };
-        
+
+  // helper function to display config info
+  const configInfo = (bool) => {
+    return bool ? '(click for Player)' : '(click for AI)';
+  }
 
   return (
     <>
       <div className="columns is-variable is-1 is-mobile">
         <div className="column is-half">
           <div className="section p-0 pl-3 min-height-1">
-            {/* hide playerStatus if game is not in playing state (turn === 0) */}
-            <h4 className="is-size-5 has-text-link">{playerStatus.X}</h4>
+            {/* replace playerStatus with configInfo if game not in playing state (turn === 0) */}
+            <h4 className="is-size-5 has-text-link">{turn ? playerStatus.X : configInfo(config.X.isComputer) }</h4>
           </div>
-          <div className={`box p-3 player-x ${winner.length && turn > 0 ? 'is-win' : null}`} id="X" onDoubleClick={!turn ? handleDoubleClick : null}>
+          <div className={`box p-3 player-x ${winner.length && turn > 0 ? 'is-win' : null}`} id="X" onClick={!turn ? handleDivOnClick : null}>
             <h4 className="is-size-5 has-text-white">{config.X.label}</h4>
           </div>
         </div>
         <div className="column is-half">
           <div className="section p-0 pr-3 has-text-right min-height-1">
-            {/* hide playerStatus if game is not in playing state (turn === 0) */}
-            <h4 className="is-size-5 has-text-link">{playerStatus.O}</h4>
+            {/* replace playerStatus with configInfo if game not in playing state (turn === 0) */}
+            <h4 className="is-size-5 has-text-link">{turn ? playerStatus.O : configInfo(config.O.isComputer)}</h4>
           </div>
-          <div className={`box p-3 has-text-right player-o ${winner.length && turn < 0 ? 'is-win' : null}`} id="O" onDoubleClick={!turn ? handleDoubleClick : null}>
+          <div className={`box p-3 has-text-right player-o ${winner.length && turn < 0 ? 'is-win' : null}`} id="O" onClick={!turn ? handleDivOnClick : null}>
             <h4 className="is-size-5 has-text-white">{config.O.label}</h4>
           </div>
         </div>

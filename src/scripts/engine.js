@@ -65,12 +65,14 @@ export const minimax = (arrRef, playerId, depth=0, alpha=-Infinity, beta=Infinit
   const arr = arrRef.map(row => [...row]);
 
   // helper function to determine if game is over
-  const { win } = isWin(playerId, arr);
+  // checks if previous depth move by previous playerId in the recursion resulted in a win
+  const { win } = isWin(-playerId, arr);
 
   // base case: game is over
   // if game is over, return score
   if (win) {
-    return { score: 10 - depth };
+    // if previous depth move resulted in a win, return negative score evaluation by current playerId
+    return { score: -(10 - depth) };
   } else if (arr.every(row => row.every(col => col !== 0))) {
     // if game is a tie, return score
     return { score: 0 };
