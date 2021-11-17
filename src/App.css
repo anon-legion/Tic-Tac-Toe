@@ -11,9 +11,8 @@ img {
   max-height: 95%;
 }
 
-/* unused */
-.no-scroll {
-  overflow: hidden;
+div.hero.is-black {
+  background-color: black;
 }
 
 /* creates a 3 by 3 square grid */
@@ -52,7 +51,7 @@ img {
 
 .grid-container div:hover,
 footer:hover {
-  background-color: #0E0E0F;
+  background-color: #090909;
 }
 
 .player-x {
