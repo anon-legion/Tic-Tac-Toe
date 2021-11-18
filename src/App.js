@@ -30,8 +30,8 @@ function App() {
           </div>
         </GameProvider>
       </main>
-      <footer className="has-text-centered">
-        <a href="https://github.com/anon-legion" target="_blank">
+      <footer className="is-flex is-justify-content-center">
+        <a href="https://github.com/anon-legion" target="_blank" rel="noreferrer nofollow">
           <p className="is-clickable is-size-5 has-text-grey-dark">Copyright © 2021 =GV=
             <span className="icon-text">
               <span className="icon is-medium has-text-grey-dark">

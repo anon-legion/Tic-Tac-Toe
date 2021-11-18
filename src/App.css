@@ -49,8 +49,9 @@ header.hero.is-black {
   align-items: center;
 }
 
+/* hvoer effect for square and for footer anchor */
 .grid-container div:hover,
-footer:hover {
+footer a:hover {
   background-color: #090909;
 }
 

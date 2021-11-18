@@ -10,7 +10,7 @@ export const imgSelector = (n) => {
   } else {
     return null;
   }
-}
+};
 
 // win condition function
 export const isWin = (playerId, arr) => {
@@ -19,27 +19,25 @@ export const isWin = (playerId, arr) => {
 
   // check for horizontal win
   for (let i = 0; i < arr.length; i++) {
-    // if (arr[i][0] === playerId && arr[i][1] === playerId && arr[i][2] === playerId) {
     if (arr[i].every(el => el === playerId)) {
       win = true;
       winArr = [`${i}0`, `${i}1`, `${i}2`];
       break;
     }
-  }
+  };
 
   // check for vertical win
   const getColumnVals = (i) => {
     return [arr[0][i], arr[1][i], arr[2][i]];
-  }
+  };
 
   for (let i = 0; i < arr.length; i++) {
-    // if (arr[0][i] === playerId && arr[1][i] === playerId && arr[2][i] === playerId) {
-      if (getColumnVals(i).every(el => el === playerId)) {
+    if (getColumnVals(i).every(el => el === playerId)) {
       win = true;
       winArr = [`0${i}`, `1${i}`, `2${i}`];;
       break;
     }
-  }
+  };
 
   // check for diagonal win
   if (arr[0][0] === playerId && arr[1][1] === playerId && arr[2][2] === playerId) {
