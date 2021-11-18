@@ -15,16 +15,16 @@ function App() {
           <h2 className="subtitle is-4">Minimax algorithm</h2>
         </div>
       </header>
-      <main className="is-flex is-flex-direction-column is-justify-content-center mobile-LR-nopadding">
+      <main className="is-flex is-flex-direction-column is-justify-content-center mobile-padding">
         <GameProvider>
           <div className="container">
-            <div className="section p-0 pb-4 pt-5">
+            <div className="section p-0 pb-4 pt-4 mobile-padding">
               <GameDisplay />
             </div>
             <div className="grid-container">
               <Grid />
             </div>
-            <div className="buttons is-centered p-6">
+            <div className="buttons is-centered p-6 mobile-button-padding">
               <GameButtons />
             </div>
           </div>
