@@ -10,7 +10,7 @@
 
 ---
 
-### **Minimax alpha-beta pruning** algorithm implementation <br> Mobile first design  
+### [**Minimax alpha-beta pruning algorithm**](https://github.com/anon-legion/Tic-Tac-Toe/blob/main/src/scripts/engine.js) implementation
 
 ### **Tech**:
 
@@ -20,6 +20,7 @@
 * **ReactJS**
   - [x] custom hook
   - [x] custom context component
-* **CSS**
 * **Bulma**
+  - [x] mobile first design
+* **CSS**
 * **HTML**
