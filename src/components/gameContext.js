@@ -23,10 +23,10 @@ export function useGameContext() {
 export const GameProvider = ({ children }) => {
   // initial grid state
   const [gridArray, setGridArray] = useState(() => [
-		[0, 0, 0],
-		[0, 0, 0],
-		[0, 0, 0]
-	]);
+    [0, 0, 0],
+    [0, 0, 0],
+    [0, 0, 0]
+  ]);
 
   // player configuration state
   const [config, setConfig] = useState(() =>{

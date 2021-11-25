@@ -33,7 +33,7 @@ export default function Grid() {
     };
     return isXComputerTurn() || isOComputerTurn()
   }, [config, turn])
-	
+  
   return (
     <>
       {gridArray.map((row, rowIndex) => {
