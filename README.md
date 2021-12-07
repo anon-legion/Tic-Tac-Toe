@@ -1,5 +1,9 @@
 # **Tic-Tac-Toe**  
 
+### React based browser game
+
+### Responsive design for mobile, tablet, and desktop
+<br>
 
 ### *Click* player box to toggle computer opponent on/off  
 
